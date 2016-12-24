@@ -1,8 +1,6 @@
 package ru.mail.polis;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 //TODO: write code here
 public class AVLTree<E extends Comparable<E>> implements ISortedSet<E> {
@@ -73,7 +71,18 @@ public class AVLTree<E extends Comparable<E>> implements ISortedSet<E> {
 
     @Override
     public List<E> inorderTraverse() {
-        return null;
+        List<E> list = new ArrayList<>(size);
+        inorderTraverse(root, list);
+        return list;
+    }
+
+    private void inorderTraverse(Node curr, List<E> list) {
+        if (curr == null) {
+            return;
+        }
+        inorderTraverse(curr.left, list);
+        list.add(curr.value);
+        inorderTraverse(curr.right, list);
     }
 
     @Override
@@ -276,12 +285,37 @@ public class AVLTree<E extends Comparable<E>> implements ISortedSet<E> {
         return comparator == null ? v1.compareTo(v2) : comparator.compare(v1, v2);
     }
 
+    @Override
+    public String toString() {
+        return "AVLT{" + root + "}";
+    }
+
 
     public static void main(String[] args) {
         AVLTree<Integer> tree = new AVLTree<>();
-        for (int i = 0; i < 8; i++) {
-            tree.add(i);
-            System.out.println("add " + i + ", height = " + tree.getHeight());
+        tree.add(10);
+        tree.add(5);
+        tree.add(15);
+        System.out.println(tree.inorderTraverse());
+        System.out.println(tree.size);
+        System.out.println(tree);
+        tree.remove(10);
+        tree.remove(15);
+        System.out.println(tree.size);
+        System.out.println(tree);
+        tree.remove(5);
+        System.out.println(tree.size);
+        System.out.println(tree);
+        tree.add(15);
+        System.out.println(tree.size);
+        System.out.println(tree);
+
+        System.out.println("------------");
+        Random rnd = new Random();
+        tree = new AVLTree<>();
+        for (int i = 0; i < 15; i++) {
+            tree.add(rnd.nextInt(50));
         }
+        System.out.println(tree.inorderTraverse());
     }
 }

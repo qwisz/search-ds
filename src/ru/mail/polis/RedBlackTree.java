@@ -34,7 +34,7 @@ public class RedBlackTree<E extends Comparable<E>> implements ISortedSet<E> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
